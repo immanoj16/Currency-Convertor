@@ -2,11 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const SelectCurrency = (props) => {
+
     const {currencies, onSelectCurrency} = props;
+    const filteredCurrencies = currencies.filter(currency => currency.code !== 'AUD');
+
     return (
         <select onChange={(e) => onSelectCurrency(e.target.value)}>
             {
-                currencies.map(currency => {
+                filteredCurrencies.map(currency => {
                     const {code, name} = currency;
                     return <option key={code} value={code}>{name}</option>
                 })

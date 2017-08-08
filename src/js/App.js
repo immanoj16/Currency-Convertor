@@ -18,8 +18,8 @@ class App extends React.Component {
     }
   }
 
-  onSelectCurrency () {
-      console.log("select currency");
+  onSelectCurrency (code) {
+      console.log("select currency" + code);
   }
 
   render(){

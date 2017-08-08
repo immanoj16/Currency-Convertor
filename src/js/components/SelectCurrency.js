@@ -2,10 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const SelectCurrency = (props) => {
+    const {currencies, onSelectCurrency} = props;
     return (
-        <select>
-          <option value="A">Option A</option>
-          <option value="B">Option B</option>
+        <select onChange={(e) => onSelectCurrency(e.target.value)}>
+            {
+                currencies.map(currency => {
+                    const {code, name} = currency;
+                    return <option key={code} value={code}>{name}</option>
+                })
+            }
         </select>
     )
 }

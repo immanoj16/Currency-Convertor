@@ -6,7 +6,7 @@ const bootstrapEntryPoints = require('./webpack.bootstrap.config.js');
 const path = require("path");
 var isProd = process.env.NODE_ENV === 'production'; //true or false
 const bootstrapConfig = isProd ? bootstrapEntryPoints.prod : bootstrapEntryPoints.dev;
-module.exports = {
+const config = {
     entry: {
         app: './src/index.js',
         bootstrap: bootstrapConfig
@@ -18,7 +18,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.scss$/, 
+                test: /\.scss$/,
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
                     use: ['css-loader','sass-loader'],
@@ -70,3 +70,16 @@ module.exports = {
         })
     ]
 }
+
+if (process.env.NODE_ENV === 'production') {
+	config.plugins.push(
+		new webpack.DefinePlugin({
+			'process.env': {
+				'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+			}
+		}),
+		new webpack.optimize.UglifyJsPlugin()
+	)
+}
+
+module.exports = config;
